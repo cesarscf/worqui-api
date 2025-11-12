@@ -84,7 +84,7 @@ export async function customerAuthVerify(app: FastifyInstance) {
           .where(eq(verifications.id, verification.id))
 
         const token = await reply.jwtSign(
-          { sub: customer.id },
+          { sub: customer.id, type: "customer" },
           {
             sign: { expiresIn: "7d" },
           },

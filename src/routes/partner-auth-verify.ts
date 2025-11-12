@@ -86,7 +86,7 @@ export async function partnerAuthVerify(app: FastifyInstance) {
           .where(eq(verifications.id, verification.id))
 
         const token = await reply.jwtSign(
-          { sub: partner.id },
+          { sub: partner.id, type: "partner" },
           {
             sign: { expiresIn: "7d" },
           },
