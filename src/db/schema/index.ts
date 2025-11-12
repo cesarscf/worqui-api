@@ -1,5 +1,4 @@
 export * from "./customers"
-export * from "./partner-coverage"
 export * from "./partner-service-categories"
 export * from "./partners"
 export * from "./quotations"

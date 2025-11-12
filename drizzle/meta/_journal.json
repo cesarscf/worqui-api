@@ -15,6 +15,13 @@
       "when": 1762968213166,
       "tag": "0001_aromatic_iceman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762970124340,
+      "tag": "0002_flowery_snowbird",
+      "breakpoints": true
     }
   ]
 }
