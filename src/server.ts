@@ -10,6 +10,7 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
+import { acceptQuotation } from "./routes/accept-quotation"
 import { addPartnerServiceCategory } from "./routes/add-partner-service-category"
 import { createQuotation } from "./routes/create-quotation"
 import { createServiceOrder } from "./routes/create-service-order"
@@ -17,6 +18,7 @@ import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
 import { customerAuthVerify } from "./routes/customer-auth-verify"
 import { getPartnerServiceOrders } from "./routes/get-partner-service-orders"
 import { getServiceCategories } from "./routes/get-service-categories"
+import { getServiceOrderQuotations } from "./routes/get-service-order-quotations"
 import { partnerAuthSendOtp } from "./routes/partner-auth-send-otp"
 import { partnerAuthVerify } from "./routes/partner-auth-verify"
 
@@ -61,6 +63,8 @@ app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
 app.register(getServiceCategories)
 app.register(createServiceOrder)
+app.register(getServiceOrderQuotations)
+app.register(acceptQuotation)
 app.register(partnerAuthSendOtp)
 app.register(partnerAuthVerify)
 app.register(addPartnerServiceCategory)

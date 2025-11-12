@@ -1,11 +1,23 @@
 import { relations } from "drizzle-orm"
-import { pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { customers } from "./customers"
 import { quotations } from "./quotations"
 import { serviceCategories } from "./service-categories"
 
-export const serviceOrders = pgTable("requests", {
+export const serviceOrderStatusValues = [
+  "pending",
+  "in_progress",
+  "completed",
+  "cancelled",
+] as const
+
+export const serviceOrderStatusEnum = pgEnum(
+  "quotation_status",
+  serviceOrderStatusValues,
+)
+
+export const serviceOrders = pgTable("service-orders", {
   id: uuid("id").primaryKey().defaultRandom(),
   customerId: uuid("customer_id")
     .notNull()
@@ -16,7 +28,8 @@ export const serviceOrders = pgTable("requests", {
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
   postalCode: varchar("postal_code", { length: 10 }).notNull(),
-  status: varchar("status", { length: 50 }).notNull().default("pending"),
+  status: serviceOrderStatusEnum("status").notNull().default("pending"),
+
   ...lifecycleDates,
 })
 

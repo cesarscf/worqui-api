@@ -1,8 +1,19 @@
 import { relations } from "drizzle-orm"
-import { decimal, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
+import { decimal, pgEnum, pgTable, text, uuid } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { partners } from "./partners"
 import { serviceOrders } from "./service-orders"
+
+export const quotationStatusValues = [
+  "pending",
+  "accepted",
+  "rejected",
+] as const
+
+export const quotationStatusEnum = pgEnum(
+  "quotation_status",
+  quotationStatusValues,
+)
 
 export const quotations = pgTable("quotations", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -12,9 +23,9 @@ export const quotations = pgTable("quotations", {
   partnerId: uuid("professional_id")
     .notNull()
     .references(() => partners.id, { onDelete: "cascade" }),
-  price: decimal("price", { precision: 10, scale: 2 }),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   message: text("message"),
-  status: varchar("status", { length: 50 }).notNull().default("pending"),
+  status: quotationStatusEnum("status").notNull().default("pending"),
   ...lifecycleDates,
 })
 
