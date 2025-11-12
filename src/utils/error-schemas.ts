@@ -10,6 +10,9 @@ export const errorSchemas = {
   notFound: z.object({
     message: z.string(),
   }),
+  conflict: z.object({
+    message: z.string(),
+  }),
   internalServerError: z.object({
     message: z.string(),
   }),

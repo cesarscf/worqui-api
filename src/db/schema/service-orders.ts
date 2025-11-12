@@ -3,7 +3,6 @@ import { pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { customers } from "./customers"
 import { quotations } from "./quotations"
-import { serviceAddresses } from "./service-addresses"
 import { serviceCategories } from "./service-categories"
 
 export const serviceOrders = pgTable("requests", {
@@ -16,6 +15,7 @@ export const serviceOrders = pgTable("requests", {
     .references(() => serviceCategories.id),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
+  postalCode: varchar("postal_code", { length: 10 }).notNull(),
   status: varchar("status", { length: 50 }).notNull().default("pending"),
   ...lifecycleDates,
 })
@@ -31,7 +31,6 @@ export const serviceOrdersRelations = relations(
       fields: [serviceOrders.categoryId],
       references: [serviceCategories.id],
     }),
-    address: one(serviceAddresses),
     quotations: many(quotations),
   }),
 )

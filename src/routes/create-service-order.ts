@@ -3,7 +3,7 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { serviceAddresses, serviceCategories, serviceOrders } from "@/db/schema"
+import { serviceCategories, serviceOrders } from "@/db/schema"
 import { customerAuthMiddleware } from "@/middlewares/customer-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
@@ -46,24 +46,14 @@ export async function createServiceOrder(app: FastifyInstance) {
             .send({ message: "Service category not found" })
         }
 
-        const [serviceOrder] = await db
-          .insert(serviceOrders)
-          .values({
-            customerId: sub,
-            categoryId,
-            title,
-            description: description || null,
-            status: "pending",
-          })
-          .returning()
-
-        await db
-          .insert(serviceAddresses)
-          .values({
-            serviceOrderId: serviceOrder.id,
-            postalCode,
-          })
-          .returning()
+        await db.insert(serviceOrders).values({
+          customerId: sub,
+          categoryId,
+          title,
+          description: description || null,
+          postalCode,
+          status: "pending",
+        })
 
         return reply.status(204).send()
       } catch {

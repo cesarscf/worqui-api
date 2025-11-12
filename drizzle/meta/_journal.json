@@ -8,6 +8,13 @@
       "when": 1762962450920,
       "tag": "0000_free_thena",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762968213166,
+      "tag": "0001_aromatic_iceman",
+      "breakpoints": true
     }
   ]
 }
