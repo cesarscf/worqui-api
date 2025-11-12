@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify"
 import z from "zod"
 import { db } from "@/db"
 import { serviceCategories } from "@/db/schema"
-import { errorSchemas } from "@/utils/error-handler"
+import { errorSchemas } from "@/utils/error-schemas"
 
 export async function getServiceCategories(app: FastifyInstance) {
   app.get(
@@ -26,9 +26,13 @@ export async function getServiceCategories(app: FastifyInstance) {
       },
     },
     async (_, reply) => {
-      const categories = await db.select().from(serviceCategories)
+      try {
+        const categories = await db.select().from(serviceCategories)
 
-      return reply.status(200).send({ categories })
+        return reply.status(200).send({ categories })
+      } catch {
+        return reply.status(500).send({ message: "Internal server error" })
+      }
     },
   )
 }

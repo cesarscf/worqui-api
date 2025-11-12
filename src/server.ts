@@ -14,7 +14,6 @@ import { createServiceOrder } from "./routes/create-service-order"
 import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
 import { customerAuthVerify } from "./routes/customer-auth-verify"
 import { getServiceCategories } from "./routes/get-service-categories"
-import { errorHandler } from "./utils/error-handler"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -52,8 +51,6 @@ app.register(ScalarApiReference, {
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
-
-app.setErrorHandler(errorHandler)
 
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
