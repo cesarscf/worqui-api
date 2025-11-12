@@ -11,6 +11,8 @@ import {
 } from "fastify-type-provider-zod"
 import { env } from "./env"
 import { createServiceOrder } from "./routes/create-service-order"
+import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
+import { customerAuthVerify } from "./routes/customer-auth-verify"
 import { getServiceCategories } from "./routes/get-service-categories"
 import { errorHandler } from "./utils/error-handler"
 
@@ -30,6 +32,15 @@ app.register(fastifySwagger, {
       title: "Worqui API",
       version: "1.0.0",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -44,6 +55,8 @@ app.register(fastifyJwt, {
 
 app.setErrorHandler(errorHandler)
 
+app.register(customerAuthSendOtp)
+app.register(customerAuthVerify)
 app.register(getServiceCategories)
 app.register(createServiceOrder)
 

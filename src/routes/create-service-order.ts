@@ -15,6 +15,7 @@ export async function createServiceOrder(app: FastifyInstance) {
       schema: {
         tags: ["Service Orders"],
         summary: "Create a service order",
+        security: [{ bearerAuth: [] }],
         body: z.object({
           categoryId: z.uuid(),
           title: z.string().min(3).max(255),
