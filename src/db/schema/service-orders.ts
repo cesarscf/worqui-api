@@ -20,15 +20,18 @@ export const serviceOrders = pgTable("requests", {
   ...lifecycleDates,
 })
 
-export const serviceOrdersRelations = relations(serviceOrders, ({ one, many }) => ({
-  customer: one(customers, {
-    fields: [serviceOrders.customerId],
-    references: [customers.id],
+export const serviceOrdersRelations = relations(
+  serviceOrders,
+  ({ one, many }) => ({
+    customer: one(customers, {
+      fields: [serviceOrders.customerId],
+      references: [customers.id],
+    }),
+    category: one(serviceCategories, {
+      fields: [serviceOrders.categoryId],
+      references: [serviceCategories.id],
+    }),
+    address: one(serviceAddresses),
+    quotations: many(quotations),
   }),
-  category: one(serviceCategories, {
-    fields: [serviceOrders.categoryId],
-    references: [serviceCategories.id],
-  }),
-  address: one(serviceAddresses),
-  quotations: many(quotations),
-}))
+)

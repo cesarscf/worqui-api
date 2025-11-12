@@ -10,6 +10,9 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
+import { createServiceOrder } from "./routes/create-service-order"
+import { getServiceCategories } from "./routes/get-service-categories"
+import { errorHandler } from "./utils/error-handler"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -38,6 +41,11 @@ app.register(ScalarApiReference, {
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
+
+app.setErrorHandler(errorHandler)
+
+app.register(getServiceCategories)
+app.register(createServiceOrder)
 
 app
   .listen({
