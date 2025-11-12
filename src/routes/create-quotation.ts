@@ -22,7 +22,7 @@ export async function createQuotation(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         body: z.object({
           serviceOrderId: z.uuid(),
-          price: z.number().positive(),
+          priceInCents: z.number().int().positive(),
           message: z.string().optional(),
         }),
         response: {
@@ -41,7 +41,7 @@ export async function createQuotation(app: FastifyInstance) {
     async (request, reply) => {
       try {
         const partnerId = await request.getCurrentPartnerId()
-        const { serviceOrderId, price, message } = request.body
+        const { serviceOrderId, priceInCents, message } = request.body
 
         const serviceOrder = await db.query.serviceOrders.findFirst({
           where: eq(serviceOrders.id, serviceOrderId),
@@ -93,7 +93,7 @@ export async function createQuotation(app: FastifyInstance) {
           .values({
             serviceOrderId,
             partnerId,
-            price: price.toString(),
+            priceInCents,
             message: message || null,
             status: "pending",
           })

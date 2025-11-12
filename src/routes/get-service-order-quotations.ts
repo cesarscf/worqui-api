@@ -24,7 +24,7 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
             quotations: z.array(
               z.object({
                 id: z.string(),
-                price: z.string(),
+                priceInCents: z.number().int(),
                 message: z.string().nullable(),
                 status: z.string(),
                 createdAt: z.date(),

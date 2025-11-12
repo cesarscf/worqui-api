@@ -17,7 +17,7 @@ export const serviceOrderStatusEnum = pgEnum(
   serviceOrderStatusValues,
 )
 
-export const serviceOrders = pgTable("service-orders", {
+export const serviceOrders = pgTable("service_orders", {
   id: uuid("id").primaryKey().defaultRandom(),
   customerId: uuid("customer_id")
     .notNull()
