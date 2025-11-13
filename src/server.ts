@@ -10,19 +10,19 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
-import { acceptQuotation } from "./routes/accept-quotation"
-import { addPartnerServiceCategory } from "./routes/add-partner-service-category"
-import { createQuotation } from "./routes/create-quotation"
-import { createServiceOrder } from "./routes/create-service-order"
-import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
-import { customerAuthVerify } from "./routes/customer-auth-verify"
-import { getPartner } from "./routes/get-partner"
-import { getPartnerServiceOrders } from "./routes/get-partner-service-orders"
-import { getServiceCategories } from "./routes/get-service-categories"
-import { getServiceCategory } from "./routes/get-service-category"
-import { getServiceOrderQuotations } from "./routes/get-service-order-quotations"
-import { partnerAuthSendOtp } from "./routes/partner-auth-send-otp"
-import { partnerAuthVerify } from "./routes/partner-auth-verify"
+import { acceptQuotation } from "./routes/customer/accept-quotation"
+import { createServiceOrder } from "./routes/customer/create-service-order"
+import { getServiceOrderQuotations } from "./routes/customer/get-service-order-quotations"
+import { addPartnerServiceCategory } from "./routes/partner/add-partner-service-category"
+import { createQuotation } from "./routes/partner/create-quotation"
+import { getPartner } from "./routes/partner/get-partner"
+import { getPartnerServiceOrders } from "./routes/partner/get-partner-service-orders"
+import { customerAuthSendOtp } from "./routes/public/customer-auth-send-otp"
+import { customerAuthVerify } from "./routes/public/customer-auth-verify"
+import { getServiceCategories } from "./routes/public/get-service-categories"
+import { getServiceCategory } from "./routes/public/get-service-category"
+import { partnerAuthSendOtp } from "./routes/public/partner-auth-send-otp"
+import { partnerAuthVerify } from "./routes/public/partner-auth-verify"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -61,15 +61,20 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
 
+// Public routes
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
+app.register(partnerAuthSendOtp)
+app.register(partnerAuthVerify)
 app.register(getServiceCategories)
 app.register(getServiceCategory)
+
+// Customer routes
 app.register(createServiceOrder)
 app.register(getServiceOrderQuotations)
 app.register(acceptQuotation)
-app.register(partnerAuthSendOtp)
-app.register(partnerAuthVerify)
+
+// Partner routes
 app.register(getPartner)
 app.register(addPartnerServiceCategory)
 app.register(getPartnerServiceOrders)
