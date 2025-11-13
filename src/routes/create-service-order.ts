@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
+import { z } from "zod"
 import { db } from "@/db"
 import { serviceCategories, serviceOrders } from "@/db/schema"
 import { customerAuthMiddleware } from "@/middlewares/customer-auth-middleware"
@@ -34,6 +34,7 @@ export async function createServiceOrder(app: FastifyInstance) {
     async (request, reply) => {
       try {
         const sub = await request.getCurrentCustomerId()
+
         const { categoryId, title, description, postalCode } = request.body
 
         const category = await db.query.serviceCategories.findFirst({

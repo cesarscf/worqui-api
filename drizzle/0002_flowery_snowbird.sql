@@ -1,1 +1,1 @@
-DROP TABLE "professional_coverage" CASCADE;
+DROP TABLE IF EXISTS "professional_coverage" CASCADE;

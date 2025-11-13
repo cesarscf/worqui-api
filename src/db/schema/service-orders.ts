@@ -13,7 +13,7 @@ export const serviceOrderStatusValues = [
 ] as const
 
 export const serviceOrderStatusEnum = pgEnum(
-  "quotation_status",
+  "service_order_status",
   serviceOrderStatusValues,
 )
 

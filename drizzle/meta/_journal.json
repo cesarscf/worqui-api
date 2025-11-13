@@ -22,6 +22,13 @@
       "when": 1762970124340,
       "tag": "0002_flowery_snowbird",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1763050039311,
+      "tag": "0003_loving_absorbing_man",
+      "breakpoints": true
     }
   ]
 }

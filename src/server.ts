@@ -18,6 +18,7 @@ import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
 import { customerAuthVerify } from "./routes/customer-auth-verify"
 import { getPartnerServiceOrders } from "./routes/get-partner-service-orders"
 import { getServiceCategories } from "./routes/get-service-categories"
+import { getServiceCategory } from "./routes/get-service-category"
 import { getServiceOrderQuotations } from "./routes/get-service-order-quotations"
 import { partnerAuthSendOtp } from "./routes/partner-auth-send-otp"
 import { partnerAuthVerify } from "./routes/partner-auth-verify"
@@ -62,6 +63,7 @@ app.register(fastifyJwt, {
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
 app.register(getServiceCategories)
+app.register(getServiceCategory)
 app.register(createServiceOrder)
 app.register(getServiceOrderQuotations)
 app.register(acceptQuotation)
