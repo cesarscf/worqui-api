@@ -16,6 +16,7 @@ import { createQuotation } from "./routes/create-quotation"
 import { createServiceOrder } from "./routes/create-service-order"
 import { customerAuthSendOtp } from "./routes/customer-auth-send-otp"
 import { customerAuthVerify } from "./routes/customer-auth-verify"
+import { getPartner } from "./routes/get-partner"
 import { getPartnerServiceOrders } from "./routes/get-partner-service-orders"
 import { getServiceCategories } from "./routes/get-service-categories"
 import { getServiceCategory } from "./routes/get-service-category"
@@ -69,6 +70,7 @@ app.register(getServiceOrderQuotations)
 app.register(acceptQuotation)
 app.register(partnerAuthSendOtp)
 app.register(partnerAuthVerify)
+app.register(getPartner)
 app.register(addPartnerServiceCategory)
 app.register(getPartnerServiceOrders)
 app.register(createQuotation)
