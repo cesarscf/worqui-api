@@ -20,8 +20,8 @@ export async function getPartner(app: FastifyInstance) {
           200: z.object({
             id: z.uuid(),
             name: z.string(),
-            email: z.string(),
-            phone: z.string().nullable(),
+            email: z.string().nullable(),
+            phone: z.string(),
             expertise: z.string().nullable(),
             phoneVerifiedAt: z.date().nullable(),
             emailVerifiedAt: z.date().nullable(),

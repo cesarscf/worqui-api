@@ -6,9 +6,9 @@ import { db } from "@/db"
 import { partners, verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function partnerAuthVerify(app: FastifyInstance) {
+export async function partnerAuthVerifyOtp(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/partner-auth/verify",
+    "/partner-auth/verify-otp",
     {
       schema: {
         tags: ["Partner Auth"],

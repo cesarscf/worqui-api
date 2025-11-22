@@ -22,7 +22,7 @@ import { customerAuthVerify } from "./routes/public/customer-auth-verify"
 import { getServiceCategories } from "./routes/public/get-service-categories"
 import { getServiceCategory } from "./routes/public/get-service-category"
 import { partnerAuthSendOtp } from "./routes/public/partner-auth-send-otp"
-import { partnerAuthVerify } from "./routes/public/partner-auth-verify"
+import { partnerAuthVerifyOtp } from "./routes/public/partner-auth-verify-otp"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -65,7 +65,7 @@ app.register(fastifyJwt, {
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
 app.register(partnerAuthSendOtp)
-app.register(partnerAuthVerify)
+app.register(partnerAuthVerifyOtp)
 app.register(getServiceCategories)
 app.register(getServiceCategory)
 
@@ -89,3 +89,32 @@ app
     console.log("🔥 HTTP server running on http://localhost:3333")
     console.log("📚 Docs available at http://localhost:3333/docs")
   })
+
+
+//  [    "Brastemp",
+//     "Consul",
+//     "Electrolux",
+//     "Elgin",
+//     "Fujitsu",
+//     "Gree",
+//     "Komeco",
+//     "LG",
+//     "Midea",
+//     "Philco",
+//     "Samsung",
+//     "Spinger Carrier",
+//     "York",
+//     "Outras"
+//   ]
+
+// ["Dentro da garantia", "Fora da garantia?"]
+
+// ["Manutenção", "Instalação"]
+
+// [ "Não, apenas instalação do ar condicionado","Barulho excessivo", "Controle com problema", "Desliga sozinho", "Não liga", "Higienização", "Troca de filtro", "Vazamento", "Outro"]
+
+// ["Não tenho data definida", "Urgente", "Nos próximos 7 dias", "Nos próximos 15 dias", "Nos próximos 30 dias"]
+
+// ["Informações adicionais"]
+
+// ["CEP"]
