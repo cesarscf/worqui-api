@@ -6,17 +6,16 @@ import { db } from "@/db"
 import { partners, verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function partnerAuthVerifyOtp(app: FastifyInstance) {
+export async function partnerAuthRegisterVerify(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/partner-auth/verify-otp",
+    "/partner-auth/register/verify",
     {
       schema: {
         tags: ["Partner Auth"],
-        summary: "Verify OTP code and authenticate partner",
+        summary: "Verify OTP code and complete partner registration",
         body: z.object({
           phoneNumber: z.string().min(8).max(20),
           code: z.string().length(6),
-          name: z.string().optional(),
         }),
         response: {
           200: z.object({
@@ -30,7 +29,7 @@ export async function partnerAuthVerifyOtp(app: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        const { phoneNumber, code, name } = request.body
+        const { phoneNumber, code } = request.body
 
         const verification = await db.query.verifications.findFirst({
           where: and(
@@ -55,38 +54,39 @@ export async function partnerAuthVerifyOtp(app: FastifyInstance) {
             .send({ message: "Verification code has expired" })
         }
 
-        let partner = await db.query.partners.findFirst({
-          where: eq(partners.phone, phoneNumber),
-        })
-
-        if (!partner) {
-          const [newPartner] = await db
-            .insert(partners)
-            .values({
-              name: name ?? phoneNumber,
-              email: `${phoneNumber}@temp.worqui.com`,
-              phone: phoneNumber,
-              phoneVerifiedAt: new Date(),
-            })
-            .returning()
-
-          partner = newPartner
-        } else {
-          const [updatedPartner] = await db
-            .update(partners)
-            .set({ phoneVerifiedAt: new Date() })
-            .where(eq(partners.id, partner.id))
-            .returning()
-
-          partner = updatedPartner
+        if (!verification.metadata) {
+          return reply.status(401).send({
+            message: "Invalid verification: missing registration data",
+          })
         }
+
+        const metadata = verification.metadata as {
+          name: string
+          email: string
+        }
+
+        if (!metadata.name || !metadata.email) {
+          return reply.status(401).send({
+            message: "Invalid verification: incomplete registration data",
+          })
+        }
+
+        const [newPartner] = await db
+          .insert(partners)
+          .values({
+            name: metadata.name,
+            email: metadata.email,
+            phone: phoneNumber,
+            phoneVerifiedAt: new Date(),
+          })
+          .returning()
 
         await db
           .delete(verifications)
           .where(eq(verifications.id, verification.id))
 
         const token = await reply.jwtSign(
-          { sub: partner.id, type: "partner" },
+          { sub: newPartner.id, type: "partner" },
           {
             sign: { expiresIn: "7d" },
           },

@@ -1,31 +1,47 @@
-import { eq } from "drizzle-orm"
+import { eq, or } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { verifications } from "@/db/schema"
+import { partners, verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function partnerAuthSendOtp(app: FastifyInstance) {
+export async function partnerAuthRegister(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/partner-auth/send-otp",
+    "/partner-auth/register",
     {
       schema: {
         tags: ["Partner Auth"],
-        summary: "Send OTP code to partner phone",
+        summary: "Register a new partner and send OTP code",
         body: z.object({
+          name: z.string().min(3).max(255),
+          email: z.string().email(),
           phoneNumber: z.string().min(8).max(20),
         }),
         response: {
           204: z.void(),
           400: errorSchemas.validationError,
+          409: z.object({
+            message: z.string(),
+          }),
           500: errorSchemas.internalServerError,
         },
       },
     },
     async (request, reply) => {
       try {
-        const { phoneNumber } = request.body
+        const { phoneNumber, name, email } = request.body
+
+        // Verificar se já existe um partner com este telefone ou email
+        const existingPartner = await db.query.partners.findFirst({
+          where: or(eq(partners.phone, phoneNumber), eq(partners.email, email)),
+        })
+
+        if (existingPartner) {
+          return reply.status(409).send({
+            message: "Partner already exists with this phone or email",
+          })
+        }
 
         const code = Math.floor(100000 + Math.random() * 900000).toString()
 
@@ -39,9 +55,10 @@ export async function partnerAuthSendOtp(app: FastifyInstance) {
           identifier: phoneNumber,
           value: code,
           expiresAt,
+          metadata: { name, email },
         })
 
-        console.log(`OTP for ${phoneNumber}: ${code}`)
+        console.log(`OTP for ${phoneNumber} (${name} - ${email}): ${code}`)
 
         return reply.status(204).send()
       } catch {

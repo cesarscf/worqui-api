@@ -21,8 +21,10 @@ import { customerAuthSendOtp } from "./routes/public/customer-auth-send-otp"
 import { customerAuthVerify } from "./routes/public/customer-auth-verify"
 import { getServiceCategories } from "./routes/public/get-service-categories"
 import { getServiceCategory } from "./routes/public/get-service-category"
-import { partnerAuthSendOtp } from "./routes/public/partner-auth-send-otp"
-import { partnerAuthVerifyOtp } from "./routes/public/partner-auth-verify-otp"
+import { partnerAuthLogin } from "./routes/public/partner-auth-login"
+import { partnerAuthLoginVerify } from "./routes/public/partner-auth-login-verify"
+import { partnerAuthRegister } from "./routes/public/partner-auth-register"
+import { partnerAuthRegisterVerify } from "./routes/public/partner-auth-register-verify"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -64,8 +66,10 @@ app.register(fastifyJwt, {
 // Public routes
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
-app.register(partnerAuthSendOtp)
-app.register(partnerAuthVerifyOtp)
+app.register(partnerAuthLogin)
+app.register(partnerAuthLoginVerify)
+app.register(partnerAuthRegister)
+app.register(partnerAuthRegisterVerify)
 app.register(getServiceCategories)
 app.register(getServiceCategory)
 
@@ -89,7 +93,6 @@ app
     console.log("🔥 HTTP server running on http://localhost:3333")
     console.log("📚 Docs available at http://localhost:3333/docs")
   })
-
 
 //  [    "Brastemp",
 //     "Consul",
