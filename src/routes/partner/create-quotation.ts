@@ -51,12 +51,14 @@ export async function createQuotation(app: FastifyInstance) {
         })
 
         if (!serviceOrder) {
-          return reply.status(404).send({ message: "Service order not found" })
+          return reply
+            .status(404)
+            .send({ message: "Pedido de serviço não encontrado" })
         }
 
         if (serviceOrder.status !== "pending") {
           return reply.status(400).send({
-            message: "Service order is no longer accepting quotations",
+            message: "Pedido de serviço não está mais aceitando cotações",
           })
         }
 
@@ -71,7 +73,7 @@ export async function createQuotation(app: FastifyInstance) {
         if (!partnerCategory) {
           return reply.status(403).send({
             message:
-              "You are not authorized to quote for this service category",
+              "Você não tem autorização para cotar esta categoria de serviço",
           })
         }
 
@@ -84,7 +86,7 @@ export async function createQuotation(app: FastifyInstance) {
 
         if (existingQuotation) {
           return reply.status(409).send({
-            message: "You already created a quotation for this service order",
+            message: "Você já criou uma cotação para este pedido de serviço",
           })
         }
 
@@ -101,7 +103,7 @@ export async function createQuotation(app: FastifyInstance) {
 
         return reply.status(201).send({ quotationId: newQuotation.id })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

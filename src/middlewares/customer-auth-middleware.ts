@@ -9,12 +9,12 @@ export async function customerAuthMiddleware(request: FastifyRequest) {
       }>()
 
       if (type !== "customer") {
-        throw { statusCode: 401, message: "Invalid token" }
+        throw { statusCode: 401, message: "Token inválido" }
       }
 
       return sub
     } catch {
-      throw { statusCode: 401, message: "Invalid token" }
+      throw { statusCode: 401, message: "Token inválido" }
     }
   }
 }

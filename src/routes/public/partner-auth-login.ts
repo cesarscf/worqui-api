@@ -30,14 +30,13 @@ export async function partnerAuthLogin(app: FastifyInstance) {
       try {
         const { phoneNumber } = request.body
 
-        // Verificar se partner existe
         const existingPartner = await db.query.partners.findFirst({
           where: eq(partners.phone, phoneNumber),
         })
 
         if (!existingPartner) {
           return reply.status(404).send({
-            message: "Partner not found. Please register first.",
+            message: "Usuário não encontrado. Por favor, registre-se primeiro.",
           })
         }
 
@@ -59,7 +58,7 @@ export async function partnerAuthLogin(app: FastifyInstance) {
 
         return reply.status(204).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

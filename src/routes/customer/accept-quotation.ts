@@ -42,24 +42,24 @@ export async function acceptQuotation(app: FastifyInstance) {
         })
 
         if (!quotation) {
-          return reply.status(404).send({ message: "Quotation not found" })
+          return reply.status(404).send({ message: "Cotação não encontrada" })
         }
 
         if (quotation.serviceOrder.customerId !== customerId) {
           return reply.status(403).send({
-            message: "You are not authorized to accept this quotation",
+            message: "Você não tem autorização para aceitar esta cotação",
           })
         }
 
         if (quotation.status !== "pending") {
           return reply
             .status(400)
-            .send({ message: "This quotation has already been processed" })
+            .send({ message: "Esta cotação já foi processada" })
         }
 
         if (quotation.serviceOrder.status !== "pending") {
           return reply.status(400).send({
-            message: "This service order is no longer accepting quotations",
+            message: "Este pedido de serviço não está mais aceitando cotações",
           })
         }
 
@@ -86,7 +86,7 @@ export async function acceptQuotation(app: FastifyInstance) {
 
         return reply.status(204).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

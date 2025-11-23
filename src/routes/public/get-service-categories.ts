@@ -31,7 +31,7 @@ export async function getServiceCategories(app: FastifyInstance) {
 
         return reply.status(200).send({ categories })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

@@ -44,7 +44,7 @@ export async function createServiceOrder(app: FastifyInstance) {
         if (!category) {
           return reply
             .status(404)
-            .send({ message: "Service category not found" })
+            .send({ message: "Categoria de serviço não encontrada" })
         }
 
         await db.insert(serviceOrders).values({
@@ -58,7 +58,7 @@ export async function createServiceOrder(app: FastifyInstance) {
 
         return reply.status(204).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

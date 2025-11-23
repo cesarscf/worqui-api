@@ -45,7 +45,7 @@ export async function getPartner(app: FastifyInstance) {
 
         if (!partner) {
           return reply.status(404).send({
-            message: "Partner not found",
+            message: "Usuário não encontrado",
           })
         }
 
@@ -58,12 +58,12 @@ export async function getPartner(app: FastifyInstance) {
           error.statusCode === 401
         ) {
           return reply.status(401).send({
-            message: "Unauthorized",
+            message: "Não autorizado",
           })
         }
 
         return reply.status(500).send({
-          message: "Internal server error",
+          message: "Erro interno do servidor",
         })
       }
     },

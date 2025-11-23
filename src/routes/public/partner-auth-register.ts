@@ -32,14 +32,13 @@ export async function partnerAuthRegister(app: FastifyInstance) {
       try {
         const { phoneNumber, name, email } = request.body
 
-        // Verificar se já existe um partner com este telefone ou email
         const existingPartner = await db.query.partners.findFirst({
           where: or(eq(partners.phone, phoneNumber), eq(partners.email, email)),
         })
 
         if (existingPartner) {
           return reply.status(409).send({
-            message: "Partner already exists with this phone or email",
+            message: "Já existe um usuário com este telefone ou email",
           })
         }
 
@@ -62,7 +61,7 @@ export async function partnerAuthRegister(app: FastifyInstance) {
 
         return reply.status(204).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

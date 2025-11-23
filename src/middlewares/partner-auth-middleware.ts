@@ -9,12 +9,12 @@ export async function partnerAuthMiddleware(request: FastifyRequest) {
       }>()
 
       if (type !== "partner") {
-        throw { statusCode: 401, message: "Invalid token" }
+        throw { statusCode: 401, message: "Token inválido" }
       }
 
       return sub
     } catch {
-      throw { statusCode: 401, message: "Invalid token" }
+      throw { statusCode: 401, message: "Token inválido" }
     }
   }
 }

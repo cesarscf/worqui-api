@@ -41,7 +41,7 @@ export async function partnerAuthRegisterVerify(app: FastifyInstance) {
         if (!verification) {
           return reply
             .status(401)
-            .send({ message: "Invalid verification code" })
+            .send({ message: "Código de verificação inválido" })
         }
 
         if (verification.expiresAt < new Date()) {
@@ -51,12 +51,12 @@ export async function partnerAuthRegisterVerify(app: FastifyInstance) {
 
           return reply
             .status(401)
-            .send({ message: "Verification code has expired" })
+            .send({ message: "Código de verificação expirado" })
         }
 
         if (!verification.metadata) {
           return reply.status(401).send({
-            message: "Invalid verification: missing registration data",
+            message: "Verificação inválida: dados de registro ausentes",
           })
         }
 
@@ -67,7 +67,7 @@ export async function partnerAuthRegisterVerify(app: FastifyInstance) {
 
         if (!metadata.name || !metadata.email) {
           return reply.status(401).send({
-            message: "Invalid verification: incomplete registration data",
+            message: "Verificação inválida: dados de registro incompletos",
           })
         }
 
@@ -94,7 +94,7 @@ export async function partnerAuthRegisterVerify(app: FastifyInstance) {
 
         return reply.status(200).send({ token })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

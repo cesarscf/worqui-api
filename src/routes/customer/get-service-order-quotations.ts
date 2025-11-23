@@ -54,12 +54,14 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
         })
 
         if (!serviceOrder) {
-          return reply.status(404).send({ message: "Service order not found" })
+          return reply
+            .status(404)
+            .send({ message: "Pedido de serviço não encontrado" })
         }
 
         if (serviceOrder.customerId !== customerId) {
           return reply.status(403).send({
-            message: "You are not authorized to view these quotations",
+            message: "Você não tem autorização para ver estas cotações",
           })
         }
 
@@ -79,7 +81,7 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
 
         return reply.status(200).send({ quotations: quotationsList })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

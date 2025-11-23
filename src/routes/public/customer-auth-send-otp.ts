@@ -45,7 +45,7 @@ export async function customerAuthSendOtp(app: FastifyInstance) {
 
         return reply.status(204).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

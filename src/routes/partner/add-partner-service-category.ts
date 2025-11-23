@@ -40,7 +40,9 @@ export async function addPartnerServiceCategory(app: FastifyInstance) {
         if (categories.length !== categoryIds.length) {
           return reply
             .status(404)
-            .send({ message: "One or more service categories not found" })
+            .send({
+              message: "Uma ou mais categorias de serviço não encontradas",
+            })
         }
 
         await db
@@ -56,7 +58,7 @@ export async function addPartnerServiceCategory(app: FastifyInstance) {
 
         return reply.status(201).send()
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

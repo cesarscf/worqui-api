@@ -42,7 +42,7 @@ export async function customerAuthVerify(app: FastifyInstance) {
         if (!verification) {
           return reply
             .status(401)
-            .send({ message: "Invalid verification code" })
+            .send({ message: "Código de verificação inválido" })
         }
 
         if (verification.expiresAt < new Date()) {
@@ -52,7 +52,7 @@ export async function customerAuthVerify(app: FastifyInstance) {
 
           return reply
             .status(401)
-            .send({ message: "Verification code has expired" })
+            .send({ message: "Código de verificação expirado" })
         }
 
         let customer = await db.query.customers.findFirst({
@@ -92,7 +92,7 @@ export async function customerAuthVerify(app: FastifyInstance) {
 
         return reply.status(200).send({ token })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

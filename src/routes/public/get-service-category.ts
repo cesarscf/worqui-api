@@ -39,14 +39,14 @@ export async function getServiceCategory(app: FastifyInstance) {
 
         if (!category) {
           return reply.status(404).send({
-            message: "Service category not found",
+            message: "Categoria de serviço não encontrada",
           })
         }
 
         return reply.status(200).send(category)
       } catch {
         return reply.status(500).send({
-          message: "Internal server error",
+          message: "Erro interno do servidor",
         })
       }
     },

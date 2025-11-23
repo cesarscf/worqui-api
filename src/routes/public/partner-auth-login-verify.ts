@@ -41,7 +41,7 @@ export async function partnerAuthLoginVerify(app: FastifyInstance) {
         if (!verification) {
           return reply
             .status(401)
-            .send({ message: "Invalid verification code" })
+            .send({ message: "Código de verificação inválido" })
         }
 
         if (verification.expiresAt < new Date()) {
@@ -51,7 +51,7 @@ export async function partnerAuthLoginVerify(app: FastifyInstance) {
 
           return reply
             .status(401)
-            .send({ message: "Verification code has expired" })
+            .send({ message: "Código de verificação expirado" })
         }
 
         const partner = await db.query.partners.findFirst({
@@ -64,7 +64,7 @@ export async function partnerAuthLoginVerify(app: FastifyInstance) {
             .where(eq(verifications.id, verification.id))
 
           return reply.status(401).send({
-            message: "Partner not found. Please register first.",
+            message: "Usuário não encontrado. Por favor, registre-se primeiro.",
           })
         }
 
@@ -86,7 +86,7 @@ export async function partnerAuthLoginVerify(app: FastifyInstance) {
 
         return reply.status(200).send({ token })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

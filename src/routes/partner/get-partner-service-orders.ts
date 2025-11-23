@@ -83,7 +83,7 @@ export async function getPartnerServiceOrders(app: FastifyInstance) {
 
         return reply.status(200).send({ serviceOrders: orders })
       } catch {
-        return reply.status(500).send({ message: "Internal server error" })
+        return reply.status(500).send({ message: "Erro interno do servidor" })
       }
     },
   )

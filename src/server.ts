@@ -63,7 +63,6 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
 
-// Public routes
 app.register(customerAuthSendOtp)
 app.register(customerAuthVerify)
 app.register(partnerAuthLogin)
@@ -73,12 +72,10 @@ app.register(partnerAuthRegisterVerify)
 app.register(getServiceCategories)
 app.register(getServiceCategory)
 
-// Customer routes
 app.register(createServiceOrder)
 app.register(getServiceOrderQuotations)
 app.register(acceptQuotation)
 
-// Partner routes
 app.register(getPartner)
 app.register(addPartnerServiceCategory)
 app.register(getPartnerServiceOrders)
@@ -94,7 +91,8 @@ app
     console.log("📚 Docs available at http://localhost:3333/docs")
   })
 
-//  [    "Brastemp",
+//  [
+//     "Brastemp",
 //     "Consul",
 //     "Electrolux",
 //     "Elgin",
