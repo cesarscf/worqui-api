@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm"
 import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { partnerServiceCategories } from "./partner-service-categories"
-import { quotations } from "./quotations"
+import { proposals } from "./proposals"
 
 export const partners = pgTable("professionals", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -17,5 +17,5 @@ export const partners = pgTable("professionals", {
 
 export const partnersRelations = relations(partners, ({ many }) => ({
   serviceCategories: many(partnerServiceCategories),
-  quotations: many(quotations),
+  proposals: many(proposals),
 }))

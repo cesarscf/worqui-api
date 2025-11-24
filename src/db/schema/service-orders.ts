@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm"
 import { pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { customers } from "./customers"
-import { quotations } from "./quotations"
+import { proposals } from "./proposals"
 import { serviceCategories } from "./service-categories"
 
 export const serviceOrderStatusValues = [
@@ -44,6 +44,6 @@ export const serviceOrdersRelations = relations(
       fields: [serviceOrders.categoryId],
       references: [serviceCategories.id],
     }),
-    quotations: many(quotations),
+    proposals: many(proposals),
   }),
 )

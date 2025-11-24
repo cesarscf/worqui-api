@@ -18,7 +18,7 @@ export async function getPartnerServiceOrders(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         response: {
           200: z.object({
-            serviceOrders: z.array(
+            items: z.array(
               z.object({
                 id: z.string(),
                 title: z.string(),
@@ -56,7 +56,7 @@ export async function getPartnerServiceOrders(app: FastifyInstance) {
           })
 
         if (partnerCategories.length === 0) {
-          return reply.status(200).send({ serviceOrders: [] })
+          return reply.status(200).send({ items: [] })
         }
 
         const categoryIds = partnerCategories.map((pc) => pc.categoryId)
@@ -81,7 +81,7 @@ export async function getPartnerServiceOrders(app: FastifyInstance) {
           orderBy: (fields, { desc }) => [desc(fields.createdAt)],
         })
 
-        return reply.status(200).send({ serviceOrders: orders })
+        return reply.status(200).send({ items: orders })
       } catch {
         return reply.status(500).send({ message: "Erro interno do servidor" })
       }

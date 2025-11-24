@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Worqui API is a service marketplace API built with Fastify, TypeScript, Drizzle ORM, and PostgreSQL. It connects customers seeking services with professionals who offer them, including location-based matching, quotations, and service requests.
+Worqui API is a service marketplace API built with Fastify, TypeScript, Drizzle ORM, and PostgreSQL. It connects customers seeking services with professionals who offer them, including location-based matching, proposals, and service requests.
 
 ## Development Commands
 
@@ -65,7 +65,7 @@ pnpm drizzle-kit studio
 - `src/middlewares/` - Authentication middlewares (customer and partner)
 - `src/db/` - Database layer
   - `index.ts` - Drizzle database instance and postgres connection
-  - `schema/` - Individual table definitions (customers, partners, service-orders, quotations, etc.)
+  - `schema/` - Individual table definitions (customers, partners, service-orders, proposals, etc.)
   - `schema/index.ts` - Re-exports all schema definitions
   - `utils.ts` - Shared schema utilities (lifecycleDates helper)
 - `src/utils/` - Shared utilities (error-schemas for API responses)
@@ -80,7 +80,7 @@ The application models a service marketplace with these core entities:
 - `customers` - Service requesters with email, phone, name
 - `service_categories` - Types of services offered
 - `service_orders` - Customer service requests with status tracking (pending, in_progress, completed, cancelled)
-- `quotations` - Partner responses to service orders with pricing and status (pending, accepted, rejected)
+- `proposals` - Partner responses to service orders with pricing and status (pending, accepted, rejected)
 
 **Supporting Tables:**
 - `partner_service_categories` - Junction table linking partners to service categories they offer
@@ -106,7 +106,7 @@ Store these in `.env` file at project root. The dev server uses `tsx --env-file=
 
 The API uses JWT-based authentication with two user types:
 - **Customers** - Service requesters who create service orders
-- **Partners** - Service providers who respond to orders with quotations
+- **Partners** - Service providers who respond to orders with proposals
 
 **Authentication Flow:**
 1. User requests OTP via `/customer-auth/send-otp` or `/partner-auth/send-otp`

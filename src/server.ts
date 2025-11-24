@@ -10,11 +10,11 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
-import { acceptQuotation } from "./routes/customer/accept-quotation"
+import { acceptProposal } from "./routes/customer/accept-proposal"
 import { createServiceOrder } from "./routes/customer/create-service-order"
-import { getServiceOrderQuotations } from "./routes/customer/get-service-order-quotations"
+import { getServiceOrderProposals } from "./routes/customer/get-service-order-proposals"
 import { addPartnerServiceCategory } from "./routes/partner/add-partner-service-category"
-import { createQuotation } from "./routes/partner/create-quotation"
+import { createProposal } from "./routes/partner/create-proposal"
 import { getPartner } from "./routes/partner/get-partner"
 import { getPartnerServiceOrders } from "./routes/partner/get-partner-service-orders"
 import { customerAuthSendOtp } from "./routes/public/customer-auth-send-otp"
@@ -73,13 +73,13 @@ app.register(getServiceCategories)
 app.register(getServiceCategory)
 
 app.register(createServiceOrder)
-app.register(getServiceOrderQuotations)
-app.register(acceptQuotation)
+app.register(getServiceOrderProposals)
+app.register(acceptProposal)
 
 app.register(getPartner)
 app.register(addPartnerServiceCategory)
 app.register(getPartnerServiceOrders)
-app.register(createQuotation)
+app.register(createProposal)
 
 app
   .listen({

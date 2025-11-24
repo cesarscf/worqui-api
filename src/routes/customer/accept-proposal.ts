@@ -3,18 +3,18 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { quotations, serviceOrders } from "@/db/schema"
+import { proposals, serviceOrders } from "@/db/schema"
 import { customerAuthMiddleware } from "@/middlewares/customer-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function acceptQuotation(app: FastifyInstance) {
+export async function acceptProposal(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/quotations/:id/accept",
+    "/proposals/:id/accept",
     {
       preHandler: [customerAuthMiddleware],
       schema: {
-        tags: ["Quotations"],
-        summary: "Accept a quotation for a service order",
+        tags: ["Proposals"],
+        summary: "Accept a proposal for a service order",
         security: [{ bearerAuth: [] }],
         params: z.object({
           id: z.uuid(),
@@ -34,54 +34,54 @@ export async function acceptQuotation(app: FastifyInstance) {
         const customerId = await request.getCurrentCustomerId()
         const { id } = request.params
 
-        const quotation = await db.query.quotations.findFirst({
-          where: eq(quotations.id, id),
+        const proposal = await db.query.proposals.findFirst({
+          where: eq(proposals.id, id),
           with: {
             serviceOrder: true,
           },
         })
 
-        if (!quotation) {
-          return reply.status(404).send({ message: "Cotação não encontrada" })
+        if (!proposal) {
+          return reply.status(404).send({ message: "Proposta não encontrada" })
         }
 
-        if (quotation.serviceOrder.customerId !== customerId) {
+        if (proposal.serviceOrder.customerId !== customerId) {
           return reply.status(403).send({
-            message: "Você não tem autorização para aceitar esta cotação",
+            message: "Você não tem autorização para aceitar esta proposta",
           })
         }
 
-        if (quotation.status !== "pending") {
+        if (proposal.status !== "pending") {
           return reply
             .status(400)
-            .send({ message: "Esta cotação já foi processada" })
+            .send({ message: "Esta proposta já foi processada" })
         }
 
-        if (quotation.serviceOrder.status !== "pending") {
+        if (proposal.serviceOrder.status !== "pending") {
           return reply.status(400).send({
-            message: "Este pedido de serviço não está mais aceitando cotações",
+            message: "Este pedido de serviço não está mais aceitando propostas",
           })
         }
 
         await db.transaction(async (tx) => {
           await tx
-            .update(quotations)
+            .update(proposals)
             .set({ status: "accepted" })
-            .where(eq(quotations.id, id))
+            .where(eq(proposals.id, id))
 
           await tx
-            .update(quotations)
+            .update(proposals)
             .set({ status: "rejected" })
             .where(
               and(
-                eq(quotations.serviceOrderId, quotation.serviceOrderId),
-                ne(quotations.id, id),
+                eq(proposals.serviceOrderId, proposal.serviceOrderId),
+                ne(proposals.id, id),
               ),
             )
           await tx
             .update(serviceOrders)
             .set({ status: "in_progress" })
-            .where(eq(serviceOrders.id, quotation.serviceOrderId))
+            .where(eq(serviceOrders.id, proposal.serviceOrderId))
         })
 
         return reply.status(204).send()

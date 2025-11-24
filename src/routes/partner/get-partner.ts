@@ -50,18 +50,7 @@ export async function getPartner(app: FastifyInstance) {
         }
 
         return reply.status(200).send(partner)
-      } catch (error) {
-        if (
-          typeof error === "object" &&
-          error !== null &&
-          "statusCode" in error &&
-          error.statusCode === 401
-        ) {
-          return reply.status(401).send({
-            message: "Não autorizado",
-          })
-        }
-
+      } catch {
         return reply.status(500).send({
           message: "Erro interno do servidor",
         })

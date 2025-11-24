@@ -3,22 +3,18 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import {
-  partnerServiceCategories,
-  quotations,
-  serviceOrders,
-} from "@/db/schema"
+import { partnerServiceCategories, proposals, serviceOrders } from "@/db/schema"
 import { partnerAuthMiddleware } from "@/middlewares/partner-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function createQuotation(app: FastifyInstance) {
+export async function createProposal(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/quotations",
+    "/proposals",
     {
       preHandler: [partnerAuthMiddleware],
       schema: {
-        tags: ["Quotations"],
-        summary: "Create a quotation for a service order",
+        tags: ["Proposals"],
+        summary: "Create a proposal for a service order",
         security: [{ bearerAuth: [] }],
         body: z.object({
           serviceOrderId: z.uuid(),
@@ -27,7 +23,7 @@ export async function createQuotation(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            quotationId: z.string(),
+            id: z.string(),
           }),
           400: errorSchemas.validationError,
           401: errorSchemas.unauthorized,
@@ -58,7 +54,7 @@ export async function createQuotation(app: FastifyInstance) {
 
         if (serviceOrder.status !== "pending") {
           return reply.status(400).send({
-            message: "Pedido de serviço não está mais aceitando cotações",
+            message: "Pedido de serviço não está mais aceitando propostas",
           })
         }
 
@@ -73,25 +69,25 @@ export async function createQuotation(app: FastifyInstance) {
         if (!partnerCategory) {
           return reply.status(403).send({
             message:
-              "Você não tem autorização para cotar esta categoria de serviço",
+              "Você não tem autorização para propor esta categoria de serviço",
           })
         }
 
-        const existingQuotation = await db.query.quotations.findFirst({
+        const existingProposal = await db.query.proposals.findFirst({
           where: and(
-            eq(quotations.serviceOrderId, serviceOrderId),
-            eq(quotations.partnerId, partnerId),
+            eq(proposals.serviceOrderId, serviceOrderId),
+            eq(proposals.partnerId, partnerId),
           ),
         })
 
-        if (existingQuotation) {
+        if (existingProposal) {
           return reply.status(409).send({
-            message: "Você já criou uma cotação para este pedido de serviço",
+            message: "Você já criou uma proposta para este pedido de serviço",
           })
         }
 
-        const [newQuotation] = await db
-          .insert(quotations)
+        const [newProposal] = await db
+          .insert(proposals)
           .values({
             serviceOrderId,
             partnerId,
@@ -99,9 +95,9 @@ export async function createQuotation(app: FastifyInstance) {
             message: message || null,
             status: "pending",
           })
-          .returning({ id: quotations.id })
+          .returning({ id: proposals.id })
 
-        return reply.status(201).send({ quotationId: newQuotation.id })
+        return reply.status(201).send({ id: newProposal.id })
       } catch {
         return reply.status(500).send({ message: "Erro interno do servidor" })
       }

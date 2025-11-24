@@ -3,25 +3,25 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { quotations, serviceOrders } from "@/db/schema"
+import { proposals, serviceOrders } from "@/db/schema"
 import { customerAuthMiddleware } from "@/middlewares/customer-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function getServiceOrderQuotations(app: FastifyInstance) {
+export async function getServiceOrderProposals(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/service-orders/:id/quotations",
+    "/service-orders/:id/proposals",
     {
       preHandler: [customerAuthMiddleware],
       schema: {
         tags: ["Service Orders"],
-        summary: "List quotations for a service order",
+        summary: "List proposals for a service order",
         security: [{ bearerAuth: [] }],
         params: z.object({
-          id: z.string().uuid(),
+          id: z.uuid(),
         }),
         response: {
           200: z.object({
-            quotations: z.array(
+            items: z.array(
               z.object({
                 id: z.string(),
                 priceInCents: z.number().int(),
@@ -31,7 +31,7 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
                 partner: z.object({
                   id: z.string(),
                   name: z.string(),
-                  email: z.string(),
+                  email: z.string().nullable(),
                   expertise: z.string().nullable(),
                 }),
               }),
@@ -61,12 +61,12 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
 
         if (serviceOrder.customerId !== customerId) {
           return reply.status(403).send({
-            message: "Você não tem autorização para ver estas cotações",
+            message: "Você não tem autorização para ver estas propostas",
           })
         }
 
-        const quotationsList = await db.query.quotations.findMany({
-          where: eq(quotations.serviceOrderId, serviceOrder.id),
+        const proposalsList = await db.query.proposals.findMany({
+          where: eq(proposals.serviceOrderId, serviceOrder.id),
           with: {
             partner: {
               columns: {
@@ -79,7 +79,7 @@ export async function getServiceOrderQuotations(app: FastifyInstance) {
           },
         })
 
-        return reply.status(200).send({ quotations: quotationsList })
+        return reply.status(200).send({ items: proposalsList })
       } catch {
         return reply.status(500).send({ message: "Erro interno do servidor" })
       }

@@ -4,18 +4,14 @@ import { lifecycleDates } from "../utils"
 import { partners } from "./partners"
 import { serviceOrders } from "./service-orders"
 
-export const quotationStatusValues = [
-  "pending",
-  "accepted",
-  "rejected",
-] as const
+export const proposalStatusValues = ["pending", "accepted", "rejected"] as const
 
-export const quotationStatusEnum = pgEnum(
-  "quotation_status",
-  quotationStatusValues,
+export const proposalStatusEnum = pgEnum(
+  "proposal_status",
+  proposalStatusValues,
 )
 
-export const quotations = pgTable("quotations", {
+export const proposals = pgTable("proposals", {
   id: uuid("id").primaryKey().defaultRandom(),
   serviceOrderId: uuid("request_id")
     .notNull()
@@ -25,17 +21,17 @@ export const quotations = pgTable("quotations", {
     .references(() => partners.id, { onDelete: "cascade" }),
   priceInCents: integer("price_in_cents").notNull(),
   message: text("message"),
-  status: quotationStatusEnum("status").notNull().default("pending"),
+  status: proposalStatusEnum("status").notNull().default("pending"),
   ...lifecycleDates,
 })
 
-export const quotationsRelations = relations(quotations, ({ one }) => ({
+export const proposalsRelations = relations(proposals, ({ one }) => ({
   serviceOrder: one(serviceOrders, {
-    fields: [quotations.serviceOrderId],
+    fields: [proposals.serviceOrderId],
     references: [serviceOrders.id],
   }),
   partner: one(partners, {
-    fields: [quotations.partnerId],
+    fields: [proposals.partnerId],
     references: [partners.id],
   }),
 }))

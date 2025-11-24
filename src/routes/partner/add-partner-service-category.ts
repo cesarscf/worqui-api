@@ -38,11 +38,9 @@ export async function addPartnerServiceCategory(app: FastifyInstance) {
         })
 
         if (categories.length !== categoryIds.length) {
-          return reply
-            .status(404)
-            .send({
-              message: "Uma ou mais categorias de serviço não encontradas",
-            })
+          return reply.status(404).send({
+            message: "Uma ou mais categorias de serviço não encontradas",
+          })
         }
 
         await db
