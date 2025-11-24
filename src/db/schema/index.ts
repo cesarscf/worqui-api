@@ -1,7 +1,2 @@
-export * from "./customers"
-export * from "./partner-service-categories"
 export * from "./partners"
-export * from "./proposals"
-export * from "./service-categories"
-export * from "./service-orders"
 export * from "./verifications"

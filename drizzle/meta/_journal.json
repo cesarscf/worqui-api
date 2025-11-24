@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1762962450920,
-      "tag": "0000_free_thena",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1762968213166,
-      "tag": "0001_aromatic_iceman",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1762970124340,
-      "tag": "0002_flowery_snowbird",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1763050039311,
-      "tag": "0003_loving_absorbing_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1763936316339,
-      "tag": "0004_happy_harrier",
+      "when": 1764025778500,
+      "tag": "0000_overconfident_colonel_america",
       "breakpoints": true
     }
   ]
