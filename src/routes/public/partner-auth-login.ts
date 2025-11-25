@@ -19,9 +19,7 @@ export async function partnerAuthLogin(app: FastifyInstance) {
         response: {
           204: z.void(),
           400: errorSchemas.validationError,
-          404: z.object({
-            message: z.string(),
-          }),
+          404: errorSchemas.notFound,
           500: errorSchemas.internalServerError,
         },
       },

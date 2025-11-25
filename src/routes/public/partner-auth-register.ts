@@ -21,9 +21,7 @@ export async function partnerAuthRegister(app: FastifyInstance) {
         response: {
           204: z.void(),
           400: errorSchemas.validationError,
-          409: z.object({
-            message: z.string(),
-          }),
+          409: errorSchemas.conflict,
           500: errorSchemas.internalServerError,
         },
       },

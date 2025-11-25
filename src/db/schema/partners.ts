@@ -7,5 +7,6 @@ export const partners = pgTable("professionals", {
   name: text("name").notNull(),
   email: text("email").unique(),
   emailVerifiedAt: timestamp("email_verified_at"),
+  phoneVerifiedAt: timestamp("phone_verified_at"),
   ...lifecycleDates,
 })

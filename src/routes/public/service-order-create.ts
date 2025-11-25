@@ -24,9 +24,7 @@ export async function serviceOrderCreate(app: FastifyInstance) {
             message: z.string(),
           }),
           400: errorSchemas.validationError,
-          401: z.object({
-            message: z.string(),
-          }),
+          401: errorSchemas.unauthorized,
           500: errorSchemas.internalServerError,
         },
       },
