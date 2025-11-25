@@ -15,6 +15,13 @@
       "when": 1764027708248,
       "tag": "0001_slow_the_hunter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764031200117,
+      "tag": "0002_luxuriant_apocalypse",
+      "breakpoints": true
     }
   ]
 }

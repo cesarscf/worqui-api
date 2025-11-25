@@ -14,6 +14,8 @@ import { partnerAuthLogin } from "./routes/public/partner-auth-login"
 import { partnerAuthLoginVerify } from "./routes/public/partner-auth-login-verify"
 import { partnerAuthRegister } from "./routes/public/partner-auth-register"
 import { partnerAuthRegisterVerify } from "./routes/public/partner-auth-register-verify"
+import { serviceOrderCreate } from "./routes/public/service-order-create"
+import { serviceOrderSendOtp } from "./routes/public/service-order-send-otp"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -56,6 +58,8 @@ app.register(partnerAuthLogin)
 app.register(partnerAuthLoginVerify)
 app.register(partnerAuthRegister)
 app.register(partnerAuthRegisterVerify)
+app.register(serviceOrderSendOtp)
+app.register(serviceOrderCreate)
 
 app
   .listen({
