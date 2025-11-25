@@ -15,7 +15,7 @@ export async function partnerAuthRegister(app: FastifyInstance) {
         summary: "Register a new partner and send OTP code",
         body: z.object({
           name: z.string().min(3).max(255),
-          email: z.string().email(),
+          email: z.email(),
           phoneNumber: z.string().min(8).max(20),
         }),
         response: {

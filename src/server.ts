@@ -10,6 +10,7 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
+import { getServiceOrders } from "./routes/get-service-orders"
 import { partnerAuthLogin } from "./routes/partner-auth-login"
 import { partnerAuthLoginVerify } from "./routes/partner-auth-login-verify"
 import { partnerAuthRegister } from "./routes/partner-auth-register"
@@ -60,6 +61,7 @@ app.register(partnerAuthRegister)
 app.register(partnerAuthRegisterVerify)
 app.register(serviceOrderSendOtp)
 app.register(serviceOrderCreate)
+app.register(getServiceOrders)
 
 app
   .listen({
