@@ -1,4 +1,5 @@
 export * from "./customers"
 export * from "./partners"
+export * from "./proposals"
 export * from "./service-orders"
 export * from "./verifications"

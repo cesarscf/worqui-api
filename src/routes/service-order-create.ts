@@ -20,8 +20,6 @@ export async function serviceOrderCreate(app: FastifyInstance) {
         response: {
           201: z.object({
             id: z.uuid(),
-            customerId: z.uuid(),
-            message: z.string(),
           }),
           400: errorSchemas.validationError,
           401: errorSchemas.unauthorized,
@@ -131,8 +129,6 @@ export async function serviceOrderCreate(app: FastifyInstance) {
 
         return reply.status(201).send({
           id: serviceOrder.id,
-          customerId: customer.id,
-          message: "Solicitação de serviço criada com sucesso",
         })
       } catch {
         return reply.status(500).send({ message: "Erro interno do servidor" })
