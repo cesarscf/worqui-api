@@ -16,6 +16,7 @@ import { partnerAuthLoginVerify } from "./routes/partner-auth-login-verify"
 import { partnerAuthRegister } from "./routes/partner-auth-register"
 import { partnerAuthRegisterVerify } from "./routes/partner-auth-register-verify"
 import { proposalCreate } from "./routes/proposal-create"
+import { proposalGet } from "./routes/proposal-get"
 import { proposalUpdateStatus } from "./routes/proposal-update-status"
 import { serviceOrderCreate } from "./routes/service-order-create"
 import { serviceOrderSendOtp } from "./routes/service-order-send-otp"
@@ -65,6 +66,7 @@ app.register(serviceOrderSendOtp)
 app.register(serviceOrderCreate)
 app.register(getServiceOrders)
 app.register(proposalCreate)
+app.register(proposalGet)
 app.register(proposalUpdateStatus)
 
 app

@@ -3,9 +3,10 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { proposals, serviceOrders } from "@/db/schema"
+import { customers, proposals, serviceOrders } from "@/db/schema"
 import { partnerAuthMiddleware } from "@/middlewares/partner-auth-middleware"
 import { centsToBRL } from "@/utils"
+import { generateAuthenticatedLink } from "@/utils/authenticated-links"
 import { errorSchemas } from "@/utils/error-schemas"
 
 export async function proposalCreate(app: FastifyInstance) {
@@ -48,6 +49,16 @@ export async function proposalCreate(app: FastifyInstance) {
           })
         }
 
+        const customer = await db.query.customers.findFirst({
+          where: eq(customers.id, serviceOrder.customerId),
+        })
+
+        if (!customer) {
+          return reply.status(404).send({
+            message: "Ordem de serviço não encontrada",
+          })
+        }
+
         const [proposal] = await db
           .insert(proposals)
           .values({
@@ -58,6 +69,17 @@ export async function proposalCreate(app: FastifyInstance) {
             status: "pending",
           })
           .returning()
+
+        const authenticatedLink = await generateAuthenticatedLink({
+          reply,
+          userId: serviceOrder.customerId,
+          path: `/proposals/${serviceOrder.id}`,
+          userType: "customer",
+        })
+
+        console.log(
+          `[WhatsApp] Enviar para ${customer.phoneNumber}: ${authenticatedLink}`,
+        )
 
         return reply.status(201).send({
           id: proposal.id,
