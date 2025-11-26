@@ -31,7 +31,10 @@ export async function partnerAuthRegister(app: FastifyInstance) {
         const { phoneNumber, name, email } = request.body
 
         const existingPartner = await db.query.partners.findFirst({
-          where: or(eq(partners.phone, phoneNumber), eq(partners.email, email)),
+          where: or(
+            eq(partners.phoneNumber, phoneNumber),
+            eq(partners.email, email),
+          ),
         })
 
         if (existingPartner) {

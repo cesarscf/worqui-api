@@ -3,7 +3,7 @@ import { lifecycleDates } from "../utils"
 
 export const partners = pgTable("professionals", {
   id: uuid("id").primaryKey().defaultRandom(),
-  phone: varchar("phone", { length: 20 }).notNull().unique(),
+  phoneNumber: varchar("phone_number", { length: 20 }).notNull().unique(),
   name: text("name").notNull(),
   email: text("email").unique(),
   emailVerifiedAt: timestamp("email_verified_at"),

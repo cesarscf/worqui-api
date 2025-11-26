@@ -49,9 +49,7 @@
         "customers_whatsapp_unique": {
           "name": "customers_whatsapp_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "whatsapp"
-          ]
+          "columns": ["whatsapp"]
         }
       },
       "policies": {},
@@ -121,16 +119,12 @@
         "professionals_phone_unique": {
           "name": "professionals_phone_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "phone"
-          ]
+          "columns": ["phone"]
         },
         "professionals_email_unique": {
           "name": "professionals_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -200,12 +194,8 @@
           "name": "proposals_partner_id_professionals_id_fk",
           "tableFrom": "proposals",
           "tableTo": "professionals",
-          "columnsFrom": [
-            "partner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["partner_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -213,12 +203,8 @@
           "name": "proposals_service_order_id_service_orders_id_fk",
           "tableFrom": "proposals",
           "tableTo": "service_orders",
-          "columnsFrom": [
-            "service_order_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["service_order_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -317,12 +303,8 @@
           "name": "service_orders_customer_id_customers_id_fk",
           "tableFrom": "service_orders",
           "tableTo": "customers",
-          "columnsFrom": [
-            "customer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["customer_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -396,11 +378,7 @@
     "public.service_order_status": {
       "name": "service_order_status",
       "schema": "public",
-      "values": [
-        "open",
-        "closed",
-        "cancelled"
-      ]
+      "values": ["open", "closed", "cancelled"]
     }
   },
   "schemas": {},

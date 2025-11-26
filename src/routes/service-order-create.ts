@@ -86,7 +86,7 @@ export async function serviceOrderCreate(app: FastifyInstance) {
         }
 
         let customer = await db.query.customers.findFirst({
-          where: eq(customers.whatsapp, phoneNumber),
+          where: eq(customers.phoneNumber, phoneNumber),
         })
 
         if (!customer) {
@@ -94,7 +94,7 @@ export async function serviceOrderCreate(app: FastifyInstance) {
             .insert(customers)
             .values({
               name: metadata.name,
-              whatsapp: phoneNumber,
+              phoneNumber: phoneNumber,
             })
             .returning()
 

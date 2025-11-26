@@ -7,6 +7,9 @@ export const errorSchemas = {
   unauthorized: z.object({
     message: z.string(),
   }),
+  forbidden: z.object({
+    message: z.string(),
+  }),
   notFound: z.object({
     message: z.string(),
   }),

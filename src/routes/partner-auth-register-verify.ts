@@ -76,7 +76,7 @@ export async function partnerAuthRegisterVerify(app: FastifyInstance) {
           .values({
             name: metadata.name,
             email: metadata.email,
-            phone: phoneNumber,
+            phoneNumber: phoneNumber,
             phoneVerifiedAt: new Date(),
           })
           .returning()

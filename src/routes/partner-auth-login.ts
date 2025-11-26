@@ -29,7 +29,7 @@ export async function partnerAuthLogin(app: FastifyInstance) {
         const { phoneNumber } = request.body
 
         const existingPartner = await db.query.partners.findFirst({
-          where: eq(partners.phone, phoneNumber),
+          where: eq(partners.phoneNumber, phoneNumber),
         })
 
         if (!existingPartner) {

@@ -6,7 +6,7 @@ import { serviceOrders } from "./service-orders"
 export const customers = pgTable("customers", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 255 }).notNull(),
-  whatsapp: varchar("whatsapp", { length: 20 }).notNull().unique(),
+  phoneNumber: varchar("phone_number", { length: 20 }).notNull().unique(),
   ...lifecycleDates,
 })
 
