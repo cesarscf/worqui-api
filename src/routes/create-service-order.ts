@@ -6,7 +6,7 @@ import { db } from "@/db"
 import { customers, serviceOrders, verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function serviceOrderCreate(app: FastifyInstance) {
+export async function createServiceOrder(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/service-orders",
     {

@@ -9,7 +9,7 @@ import { centsToBRL } from "@/utils"
 import { generateAuthenticatedLink } from "@/utils/authenticated-links"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function proposalCreate(app: FastifyInstance) {
+export async function createProposal(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/proposals",
     {

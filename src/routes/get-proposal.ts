@@ -7,7 +7,7 @@ import { proposals } from "@/db/schema"
 import { customerAuthMiddleware } from "@/middlewares/customer-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function proposalGet(app: FastifyInstance) {
+export async function getProposal(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     "/proposals/:id",
     {

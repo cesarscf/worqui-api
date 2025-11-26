@@ -6,7 +6,7 @@ import { db } from "@/db"
 import { verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function serviceOrderSendOtp(app: FastifyInstance) {
+export async function sendServiceOrderOtp(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/service-orders/send-top",
     {

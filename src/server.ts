@@ -10,16 +10,16 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 import { env } from "./env"
+import { createProposal } from "./routes/create-proposal"
+import { createServiceOrder } from "./routes/create-service-order"
+import { getProposal } from "./routes/get-proposal"
 import { getServiceOrders } from "./routes/get-service-orders"
-import { partnerAuthLogin } from "./routes/partner-auth-login"
+import { partnerAuthLoginSendOtp } from "./routes/partner-auth-login-send-otp"
 import { partnerAuthLoginVerify } from "./routes/partner-auth-login-verify"
-import { partnerAuthRegister } from "./routes/partner-auth-register"
+import { partnerAuthRegisterSendOtp } from "./routes/partner-auth-register-send-otp"
 import { partnerAuthRegisterVerify } from "./routes/partner-auth-register-verify"
-import { proposalCreate } from "./routes/proposal-create"
-import { proposalGet } from "./routes/proposal-get"
-import { proposalUpdateStatus } from "./routes/proposal-update-status"
-import { serviceOrderCreate } from "./routes/service-order-create"
-import { serviceOrderSendOtp } from "./routes/service-order-send-otp"
+import { sendServiceOrderOtp } from "./routes/send-service-order-otp"
+import { updateProposalStatus } from "./routes/update-proposal-status"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -58,16 +58,16 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
 
-app.register(partnerAuthLogin)
+app.register(partnerAuthLoginSendOtp)
 app.register(partnerAuthLoginVerify)
-app.register(partnerAuthRegister)
+app.register(partnerAuthRegisterSendOtp)
 app.register(partnerAuthRegisterVerify)
-app.register(serviceOrderSendOtp)
-app.register(serviceOrderCreate)
+app.register(sendServiceOrderOtp)
+app.register(createServiceOrder)
 app.register(getServiceOrders)
-app.register(proposalCreate)
-app.register(proposalGet)
-app.register(proposalUpdateStatus)
+app.register(createProposal)
+app.register(getProposal)
+app.register(updateProposalStatus)
 
 app
   .listen({
