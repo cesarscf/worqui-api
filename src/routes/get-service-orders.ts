@@ -1,7 +1,9 @@
+import { desc, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
+import { serviceOrders } from "@/db/schema"
 import { partnerAuthMiddleware } from "@/middlewares/partner-auth-middleware"
 import { errorSchemas } from "@/utils/error-schemas"
 
@@ -38,7 +40,8 @@ export async function getServiceOrders(app: FastifyInstance) {
     async (_, reply) => {
       try {
         const items = await db.query.serviceOrders.findMany({
-          orderBy: (serviceOrders, { desc }) => [desc(serviceOrders.createdAt)],
+          where: eq(serviceOrders.status, "open"),
+          orderBy: [desc(serviceOrders.createdAt)],
           columns: {
             id: true,
             zipCode: true,

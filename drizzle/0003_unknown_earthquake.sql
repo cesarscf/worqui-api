@@ -1,1 +1,0 @@
-ALTER TABLE "professionals" ADD COLUMN "phone_verified_at" timestamp;

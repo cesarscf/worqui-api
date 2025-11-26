@@ -1,7 +1,13 @@
 import { relations } from "drizzle-orm"
-import { pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { customers } from "./customers"
+
+export const serviceOrderStatusEnum = pgEnum("service_order_status", [
+  "open",
+  "closed",
+  "cancelled",
+])
 
 export const serviceOrders = pgTable("service_orders", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -15,6 +21,7 @@ export const serviceOrders = pgTable("service_orders", {
   issueCategory: text("issue_category").notNull(),
   urgencyLevel: text("urgency_level").notNull(),
   additionalInfo: text("additional_info"),
+  status: serviceOrderStatusEnum("status").notNull().default("open"),
   ...lifecycleDates,
 })
 

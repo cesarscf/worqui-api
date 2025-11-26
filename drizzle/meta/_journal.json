@@ -5,29 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1764025778500,
-      "tag": "0000_overconfident_colonel_america",
+      "when": 1764115091824,
+      "tag": "0000_premium_firestar",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1764027708248,
-      "tag": "0001_slow_the_hunter",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1764031200117,
-      "tag": "0002_luxuriant_apocalypse",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1764031863511,
-      "tag": "0003_unknown_earthquake",
+      "when": 1764115169261,
+      "tag": "0001_normal_aaron_stack",
       "breakpoints": true
     }
   ]
