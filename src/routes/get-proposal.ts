@@ -47,7 +47,7 @@ export async function getProposal(app: FastifyInstance) {
               issueCategory: z.string(),
               urgencyLevel: z.string(),
               additionalInfo: z.string().nullable(),
-              status: z.enum(["open", "closed", "cancelled"]),
+              status: z.enum(["pending", "in_progress", "completed", "cancelled"]),
             }),
           }),
           401: errorSchemas.unauthorized,

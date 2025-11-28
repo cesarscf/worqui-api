@@ -40,7 +40,7 @@ export async function getServiceOrders(app: FastifyInstance) {
     async (_, reply) => {
       try {
         const items = await db.query.serviceOrders.findMany({
-          where: eq(serviceOrders.status, "open"),
+          where: eq(serviceOrders.status, "pending"),
           orderBy: [desc(serviceOrders.createdAt)],
           columns: {
             id: true,

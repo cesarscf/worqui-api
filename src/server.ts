@@ -11,7 +11,9 @@ import {
 } from "fastify-type-provider-zod"
 import { env } from "./env"
 import { createProposal } from "./routes/create-proposal"
+import { getPartner } from "./routes/get-partner"
 import { getProposal } from "./routes/get-proposal"
+import { getServiceOrder } from "./routes/get-service-order"
 import { getServiceOrders } from "./routes/get-service-orders"
 import { partnerAuthLoginSendOtp } from "./routes/partner-auth-login-send-otp"
 import { partnerAuthLoginVerify } from "./routes/partner-auth-login-verify"
@@ -74,8 +76,10 @@ app.register(partnerAuthRegisterSendOtp)
 app.register(partnerAuthRegisterVerify)
 app.register(sendServiceOrderOtp)
 app.register(verifyAndCreateServiceOrder)
+app.register(getServiceOrder)
 app.register(getServiceOrders)
 app.register(createProposal)
+app.register(getPartner)
 app.register(getProposal)
 app.register(updateProposalStatus)
 
