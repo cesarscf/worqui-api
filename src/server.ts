@@ -21,7 +21,17 @@ import { sendServiceOrderOtp } from "./routes/send-service-order-otp"
 import { updateProposalStatus } from "./routes/update-proposal-status"
 import { verifyAndCreateServiceOrder } from "./routes/verify-service-order"
 
-const app = fastify().withTypeProvider<ZodTypeProvider>()
+const app = fastify({
+  logger: {
+    level: "info",
+    transport: {
+      target: "pino-pretty",
+      options: {
+        colorize: true,
+      },
+    },
+  },
+}).withTypeProvider<ZodTypeProvider>()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)

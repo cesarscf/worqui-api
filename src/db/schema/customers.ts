@@ -1,12 +1,12 @@
 import { relations } from "drizzle-orm"
-import { pgTable, uuid, varchar } from "drizzle-orm/pg-core"
+import { pgTable, text, uuid } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "../utils"
 import { serviceOrders } from "./service-orders"
 
 export const customers = pgTable("customers", {
   id: uuid("id").primaryKey().defaultRandom(),
-  name: varchar("name", { length: 255 }).notNull(),
-  phoneNumber: varchar("phone_number", { length: 20 }).notNull().unique(),
+  name: text("name").notNull(),
+  phoneNumber: text("phone_number").notNull().unique(),
   ...lifecycleDates,
 })
 
