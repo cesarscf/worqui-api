@@ -6,13 +6,13 @@ import { db } from "@/db"
 import { customers, serviceOrders, verifications } from "@/db/schema"
 import { errorSchemas } from "@/utils/error-schemas"
 
-export async function createServiceOrder(app: FastifyInstance) {
+export async function verifyAndCreateServiceOrder(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/service-orders",
+    "/service-orders/verify",
     {
       schema: {
         tags: ["Service Orders"],
-        summary: "Create a new service order after WhatsApp verification",
+        summary: "Verify OTP code and create a new service order",
         body: z.object({
           phoneNumber: z.string().min(10).max(20),
           code: z.string().length(6),

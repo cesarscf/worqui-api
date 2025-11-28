@@ -11,7 +11,6 @@ import {
 } from "fastify-type-provider-zod"
 import { env } from "./env"
 import { createProposal } from "./routes/create-proposal"
-import { createServiceOrder } from "./routes/create-service-order"
 import { getProposal } from "./routes/get-proposal"
 import { getServiceOrders } from "./routes/get-service-orders"
 import { partnerAuthLoginSendOtp } from "./routes/partner-auth-login-send-otp"
@@ -20,6 +19,7 @@ import { partnerAuthRegisterSendOtp } from "./routes/partner-auth-register-send-
 import { partnerAuthRegisterVerify } from "./routes/partner-auth-register-verify"
 import { sendServiceOrderOtp } from "./routes/send-service-order-otp"
 import { updateProposalStatus } from "./routes/update-proposal-status"
+import { verifyAndCreateServiceOrder } from "./routes/verify-service-order"
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -63,7 +63,7 @@ app.register(partnerAuthLoginVerify)
 app.register(partnerAuthRegisterSendOtp)
 app.register(partnerAuthRegisterVerify)
 app.register(sendServiceOrderOtp)
-app.register(createServiceOrder)
+app.register(verifyAndCreateServiceOrder)
 app.register(getServiceOrders)
 app.register(createProposal)
 app.register(getProposal)

@@ -17,7 +17,7 @@ export async function getProposal(app: FastifyInstance) {
         summary: "Get proposal details",
         security: [{ bearerAuth: [] }],
         params: z.object({
-          id: z.string().uuid(),
+          id: z.uuid(),
         }),
         response: {
           200: z.object({
@@ -82,7 +82,7 @@ export async function getProposal(app: FastifyInstance) {
           })
         }
 
-        return reply.send({
+        const data = {
           id: proposal.id,
           serviceOrderId: proposal.serviceOrderId,
           partnerId: proposal.partnerId,
@@ -106,7 +106,9 @@ export async function getProposal(app: FastifyInstance) {
             additionalInfo: proposal.serviceOrder.additionalInfo,
             status: proposal.serviceOrder.status,
           },
-        })
+        }
+
+        return reply.send(data)
       } catch {
         return reply.status(500).send({ message: "Erro interno do servidor" })
       }
